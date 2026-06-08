@@ -6,13 +6,11 @@ It focuses on visible, user-relevant information: what changed, what was created
 
 ## Install
 
-After this repository is published on GitHub, install the skill with:
+Install the skill with:
 
 ```powershell
-python C:\Users\%USERNAME%\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo OWNER/REPO --path enc
+python C:\Users\%USERNAME%\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo katonCODE/enc-skill --path enc
 ```
-
-Replace `OWNER/REPO` with the GitHub repository path.
 
 Restart Codex after installing so the skill is picked up.
 
