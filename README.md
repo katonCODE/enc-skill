@@ -2,7 +2,7 @@
 
 `enc` is a Codex skill for turning a chat or working session into a short, clear digest.
 
-It summarizes visible, user-relevant information such as:
+It focuses on visible, user-relevant information:
 
 * what changed
 * what was created
@@ -12,13 +12,15 @@ It summarizes visible, user-relevant information such as:
 
 ## Install
 
-Recommended: use Codex’s skill installer.
+### Recommended: Codex skill installer
+
+In Codex, run:
 
 ```text
 $skill-installer
 ```
 
-Then ask Codex:
+Then ask:
 
 ```text
 Install the skill from GitHub repo katonCODE/enc-skill, path enc
@@ -26,21 +28,46 @@ Install the skill from GitHub repo katonCODE/enc-skill, path enc
 
 Restart Codex after installing so the skill is picked up.
 
-## Manual install
+## Manual global install
 
-If needed, you can install it manually:
-
-```powershell
-mkdir $env:USERPROFILE\.agents\skills -Force
-git clone https://github.com/katonCODE/enc-skill.git
-copy enc-skill\enc $env:USERPROFILE\.agents\skills\enc -Recurse
-```
-
-Make sure this file exists:
+Codex global user skills are stored in:
 
 ```text
-C:\Users\<you>\.agents\skills\enc\SKILL.md
+$HOME/.agents/skills
 ```
+
+### Windows PowerShell
+
+```powershell
+$dest = "$HOME\.agents\skills\enc"
+$tmp = "$env:TEMP\enc-skill"
+
+Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
+
+git clone --depth 1 https://github.com/katonCODE/enc-skill.git $tmp
+New-Item -ItemType Directory -Force "$HOME\.agents\skills" | Out-Null
+Copy-Item "$tmp\enc" $dest -Recurse -Force
+
+Test-Path "$dest\SKILL.md"
+```
+
+### macOS / Linux
+
+```bash
+DEST="$HOME/.agents/skills/enc"
+TMP="/tmp/enc-skill"
+
+rm -rf "$TMP" "$DEST"
+
+git clone --depth 1 https://github.com/katonCODE/enc-skill.git "$TMP"
+mkdir -p "$HOME/.agents/skills"
+cp -R "$TMP/enc" "$DEST"
+
+test -f "$DEST/SKILL.md"
+```
+
+Restart Codex after installing if the skill does not appear.
 
 ## Use
 
